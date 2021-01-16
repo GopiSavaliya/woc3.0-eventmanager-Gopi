@@ -1,15 +1,3 @@
-"""contact = [7624033679, 9898599700]
-diary = [{
-    "Name": "Gopi",
-    "Contact Number": contact
-    },
-    {
-    ""
-    }
-    ]
-
-print(diary)"""
-
 ch = 0
 diary = {}
 
