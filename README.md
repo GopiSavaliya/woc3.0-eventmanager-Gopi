@@ -1,3 +1,3 @@
 # EventManagement
 
-This is a simple application for managing different events and participants.
+This is a simple application for managing details of different events and participants.
