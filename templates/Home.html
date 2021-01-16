@@ -1,0 +1,83 @@
+{% extends 'Base.html' %}
+{% block content %}
+<title>Home</title>
+<!--&lt;!&ndash;<style>
+    body{
+        background-image: url('https://cdn.explara.com/118880649547784245660224952416349784872856n20151023173129.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    h1{
+        color:white;
+    }
+</style>&ndash;&gt;
+<style>
+    .content{
+        background-color: coral;
+        width: 99%;
+    }
+</style>
+<div class="content">
+    <h1>Home Screen</h1>
+    <br/>
+    <a href="/Events/EventReg">Event Registration</a>
+    <br/><br/>
+    <a href="/ParticipantReg">Participant Registration</a>
+    <br/><br/>
+    <a href="/Events/EventDashboard">EventDashBoard</a>
+</div>-->
+
+<style>
+
+    #HomeBG{
+        width: 100%;
+        height: 97vh;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        backface-visibility: hidden;
+        animation: BG 10s linear infinite 0s;
+        animation-timing-function: ease-in-out;
+        background-image: url('https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/2019/07/action-adults-celebration-433452.jpg');
+    }
+
+    @keyframes BG {
+        0%{
+            background-image: url('https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/2019/07/action-adults-celebration-433452.jpg');
+        }
+        25%{
+            background-image: url('https://ungerboeckdotcomassets.blob.core.windows.net/volumes/content/New-World-Event-Experience/_wide/hybrid_events_7_practical_tips.jpg');
+        }
+        50%{
+            background-image: url('https://planetmysuru.com/wp-content/uploads/2018/02/Events-In-Chennai.jpg');
+        }
+        75%{
+            background-image: url('https://www.countrywidevents.in/images/slide3.jpg');
+        }
+        100%{
+            background-image: url('https://d1dlh1v05qf6d3.cloudfront.net/information/uploads/2014/10/iStock_000040536788_Small-1260x840.jpg');
+        }
+    }
+
+    p{
+        background-color: black;
+        color:white;
+    }
+
+
+</style>
+<div class="header">
+    <a href="/Home" class="logo">Event Manager</a>
+    <div class="header-right">
+        <a class="active" href="/Home">Home</a>
+        <a href="/Events/EventReg">Event Registration</a>
+        <a href="/ParticipantReg">Participant Registration</a>
+        <a href="/Events/EventDashboard">EventDashBoard</a>
+    </div>
+</div>
+<div id="HomeBG">
+    <div class="Content">
+        <h1 style="color:white" >Welcome</h1>
+    </div>
+</div>
+{% endblock %}

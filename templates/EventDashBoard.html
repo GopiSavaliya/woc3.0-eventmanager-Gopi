@@ -1,0 +1,66 @@
+{% extends 'Base.html' %}
+{% block content %}
+<title>Event Dashboard</title>
+
+<style>
+    .content{
+            background-image: url('https://www.iitm.ac.in/themes/custom/iitm/assets/images/no_img/seminar_m3/9.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+</style>
+
+<script type="text/javascript">
+    function validate()
+    {
+        var EventID = document.f1.EventID;
+        var pass = document.f1.pass;
+        if(EventID.value == "")
+        {
+            EventID.focus();
+            return false;
+        }
+        if(pass.value == "")
+        {
+            pass.focus();
+            return false;
+        }
+        alert("Logged in");
+        return true;
+    }
+</script>
+<div class="header">
+    <a href="/Home" class="logo">Event Manager</a>
+    <div class="header-right">
+        <a href="/Home">Home</a>
+        <a href="/Events/EventReg">Event Registration</a>
+        <a href="/ParticipantReg">Participant Registration</a>
+        <a class="active" href="/Events/EventDashboard">EventDashBoard</a>
+    </div>
+</div>
+<div class="content">
+    <div class="Form">
+        <h1>Event Dashboard</h1>
+        <br/>
+        <form method="post" name="f1" onsubmit="return(validate());">
+        <table cellpadding="5" cellspacing="5">
+            <tr>
+                <td>Event-ID:</td>
+                <td></td>
+                <td><input type="text" name="EventID"></td>
+            </tr>
+            <tr>
+                <td>Host-Password:</td>
+                <td></td>
+                <td><input type="password" name="pass"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+{% endblock %}

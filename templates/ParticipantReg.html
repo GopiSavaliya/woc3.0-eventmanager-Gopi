@@ -1,0 +1,197 @@
+{% extends 'Base.html' %}
+{% block content%}
+<title>Participant Registration</title>
+
+<style>
+    .content{
+            background-image: url('https://miro.medium.com/max/6600/1*Uxbo94VZsdyHr5rIHCo8Ew.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+</style>
+
+<script type="text/javascript">
+        function validateName()
+        {
+            var Name = document.f1.Name;
+            var pattern = /[A-Za-z]+/;
+            if(Name.value.match(pattern))
+                return true;
+            else
+            {
+                alert("Name must contain alphabets");
+                return false;
+            }
+        }
+
+        function validateContactNo()
+        {
+            var ContactNo = document.f1.ContactNo;
+            var pattern = /^[0-9]{10}$/;
+            if(ContactNo.value.match(pattern))
+                return true;
+            else
+            {
+                alert("Contact No. must contain 10 digits");
+                return false;
+            }
+        }
+
+        function validateEmail()
+        {
+            var Email = document.f1.Email;
+            var pattern = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            if(Email.value.match(pattern))
+                return true;
+            else
+            {
+                alert("Email is not correct");
+                return false;
+            }
+        }
+
+        function radiocheck(Type)
+        {
+            var People = document.f1.People;
+
+            if(Type.value == "individual")
+            {
+                People.min=1;
+                People.value=1;
+                People.disabled=true;
+            }
+            else
+            {
+                People.min=2;
+                People.value=2;
+                People.disabled=false;
+            }
+        }
+
+        function validate()
+        {
+            var Name = document.f1.Name;
+            var ContactNo = document.f1.ContactNo;
+            var Email = document.f1.Email;
+            var Event = document.f1.Event;
+            var Type = document.f1.Type;
+
+            if(Name.value == "")
+            {
+                Name.focus();
+                return false;
+            }
+            else
+            {
+                if(!validateName())
+                {
+                    Name.focus();
+                    return false;
+                }
+            }
+
+            if(ContactNo.value == "")
+            {
+                ContactNo.focus();
+                return false;
+            }
+            else
+            {
+                if(!validateContactNo())
+                {
+                    ContactNo.focus();
+                    return false;
+                }
+            }
+
+            if(Email.value == "")
+            {
+                Email.focus();
+                return false;
+            }
+            else
+            {
+                if(!validateEmail())
+                {
+                    Email.focus();
+                    return false;
+                }
+            }
+            alert("Participant Registration Successful");
+            return true;
+        }
+
+</script>
+
+<div class="header">
+    <a href="/Home" class="logo">Event Manager</a>
+    <div class="header-right">
+        <a href="/Home">Home</a>
+        <a href="/Events/EventReg">Event Registration</a>
+        <a class="active" href="/ParticipantReg">Participant Registration</a>
+        <a href="/Events/EventDashboard">EventDashBoard</a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="Form">
+    <h1>Participant Registration</h1>
+    <hr/><br/>
+    <form method="post" name="f1" action="/Home/" enctype="multipart/form-data">{% csrf_token %}
+        <table cellpadding="5" cellspacing="5">
+            <tr>
+                <td>Name:</td>
+                <td></td>
+                <td>
+                    <input type="text" name="Name" placeholder="Name">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact No.</td>
+                <td></td>
+                <td>
+                    <input type="text" name="ContactNo" placeholder="Contact No.">
+                </td>
+            </tr>
+            <tr>
+                <td>E-mail:</td>
+                <td></td>
+                <td>
+                    <input type="text" name="Email" placeholder="E-mail ID">
+                </td>
+            </tr>
+            <tr>
+                <td>Event:</td>
+                <td></td>
+                <td>
+                    <input type="radio" name="Event" value="Event1" checked> Event1
+                    <input type="radio" name="Event" value="Event2"> Event2
+                </td>
+            </tr>
+            <tr>
+                <td>Registration-Type:</td>
+                <td></td>
+                <td>
+                    <input type="radio" name="Type" value="individual" onclick="radiocheck(this)" checked> Individual
+                    <input type="radio" name="Type" value="group" onclick="radiocheck(this)"> Group
+                </td>
+            </tr>
+            <tr>
+                <td>No. of People:</td>
+                <td></td>
+                <td>
+                    <input type="number" name="People" min="1" value="1" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" name="Submit" value="Submit" onclick="return validate();">Submit</button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+{% endblock %}
