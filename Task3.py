@@ -11,12 +11,13 @@ diary = [{
 print(diary)"""
 
 ch = 0
-diary = []
+diary = {}
 
 while ch == 0:
     print("\n********** Welcome To Contact Keeper **********")
     print("\n1. Add Record.")
     print("2. Record Retrieval")
+    print("3. Display All Records")
     ch1 = int(input("Enter Your Choice: "))
 
     if ch1 == 1:
@@ -27,16 +28,28 @@ while ch == 0:
             Contacts.append(input("Enter Contact Number: "))
             choice = int(input("Do You want to insert more Contact Numbers?(Press 0 for Yes & 1 for No): "))
 
-        diary.append({
-            "Name": Name,
-            "Contact Number": Contacts
-        })
+        diary[Name] = Contacts
 
     elif ch1 == 2:
         if diary:
-            for i in range(diary):
-                print(diary[i]["Name"])
+            Name = input("Enter Name You want to Search: ")
+            flag = 0
+            for i in sorted(diary.keys()):
+                if i == Name:
+                    print(Name)
+                    print(diary[Name])
+                    flag=1
+            if flag == 0:
+                print("Name is not found")
 
+        else:
+            print("\nNo Records Available")
+
+    elif ch1 == 3:
+        if diary:
+            for i in sorted(diary.keys()):
+                print(i)
+                print(diary[i])
         else:
             print("\nNo Records Available")
 
