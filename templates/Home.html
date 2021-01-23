@@ -1,31 +1,6 @@
 {% extends 'Base.html' %}
 {% block content %}
 <title>Home</title>
-<!--&lt;!&ndash;<style>
-    body{
-        background-image: url('https://cdn.explara.com/118880649547784245660224952416349784872856n20151023173129.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-    h1{
-        color:white;
-    }
-</style>&ndash;&gt;
-<style>
-    .content{
-        background-color: coral;
-        width: 99%;
-    }
-</style>
-<div class="content">
-    <h1>Home Screen</h1>
-    <br/>
-    <a href="/Events/EventReg">Event Registration</a>
-    <br/><br/>
-    <a href="/ParticipantReg">Participant Registration</a>
-    <br/><br/>
-    <a href="/Events/EventDashboard">EventDashBoard</a>
-</div>-->
 
 <style>
 
@@ -40,22 +15,22 @@
         animation-timing-function: ease-in-out;
         background-image: url('https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/2019/07/action-adults-celebration-433452.jpg');
     }
-
+    {% load static %}
     @keyframes BG {
         0%{
-            background-image: url('https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/2019/07/action-adults-celebration-433452.jpg');
+            background-image: url("{% static 'images/image1.jpg' %}");
         }
         25%{
-            background-image: url('https://ungerboeckdotcomassets.blob.core.windows.net/volumes/content/New-World-Event-Experience/_wide/hybrid_events_7_practical_tips.jpg');
+            background-image: url("{% static 'images/image2.jpg' %}");
         }
         50%{
-            background-image: url('https://planetmysuru.com/wp-content/uploads/2018/02/Events-In-Chennai.jpg');
+            background-image: url("{% static 'images/image3.png' %}");
         }
         75%{
-            background-image: url('https://www.countrywidevents.in/images/slide3.jpg');
+            background-image: url("{% static 'images/image4.jpg' %}");
         }
         100%{
-            background-image: url('https://d1dlh1v05qf6d3.cloudfront.net/information/uploads/2014/10/iStock_000040536788_Small-1260x840.jpg');
+            background-image: url("{% static 'images/image5.jpg' %}");
         }
     }
 

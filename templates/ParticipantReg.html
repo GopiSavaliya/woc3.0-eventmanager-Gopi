@@ -3,8 +3,9 @@
 <title>Participant Registration</title>
 
 <style>
+    {% load static %}
     .content{
-            background-image: url('https://miro.medium.com/max/6600/1*Uxbo94VZsdyHr5rIHCo8Ew.jpeg');
+            background-image: url("{% static 'images/PaticipantRegistration.jpeg' %}");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -137,31 +138,39 @@
     <div class="Form">
     <h1>Participant Registration</h1>
     <hr/><br/>
-    <form method="post" name="f1" action="/Home/" enctype="multipart/form-data">{% csrf_token %}
+    <form method="post" name="f1" action="/ParticipantReg/" enctype="multipart/form-data">{% csrf_token %}
         <table cellpadding="5" cellspacing="5">
             <tr>
-                <td>Name:</td>
+                <td>
+                    <label>Name:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="text" name="Name" placeholder="Name">
                 </td>
             </tr>
             <tr>
-                <td>Contact No.</td>
+                <td>
+                    <label>Contact No.</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="text" name="ContactNo" placeholder="Contact No.">
                 </td>
             </tr>
             <tr>
-                <td>E-mail:</td>
+                <td>
+                    <label>E-mail:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="text" name="Email" placeholder="E-mail ID">
                 </td>
             </tr>
             <tr>
-                <td>Event:</td>
+                <td>
+                    <label>Event:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="radio" name="Event" value="Event1" checked> Event1
@@ -169,7 +178,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Registration-Type:</td>
+                <td>
+                    <label>Registration-Type:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="radio" name="Type" value="individual" onclick="radiocheck(this)" checked> Individual
@@ -177,20 +188,16 @@
                 </td>
             </tr>
             <tr>
-                <td>No. of People:</td>
+                <td>
+                    <label>No. of People:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="number" name="People" min="1" value="1" disabled>
                 </td>
             </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type="submit" name="Submit" value="Submit" onclick="return validate();">Submit</button>
-                </td>
-                <td></td>
-            </tr>
         </table>
+        <button type="submit" name="Submit" value="Submit" onclick="return validate();">Submit</button>
     </form>
     </div>
 </div>

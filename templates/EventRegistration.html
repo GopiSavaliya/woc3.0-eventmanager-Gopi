@@ -3,11 +3,9 @@
 <title>Event Registration</title>
 
 <style>
-        input:focus{
-            border-color: red;
-        }
+        {% load static %}
         .content{
-            background-image: url('https://media.gettyimages.com/videos/hands-typing-on-a-computer-keyboard-and-typing-number-credit-card-video-id537852562?s=640x640');
+            background-image: url("{% static 'images/EventRegistration.jpg' %}");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -22,7 +20,7 @@
                 return true;
             else
             {
-                alert("Event name is not valid");
+                document.getElementById("ENameErr").innerHTML="Event name is not valid";
                 return false;
             }
         }
@@ -35,7 +33,7 @@
                 return true;
             else
             {
-                alert("Location is not valid");
+                document.getElementById("LocationErr").innerHTML="Location is not valid";
                 return false;
             }
         }
@@ -48,7 +46,34 @@
                 return true;
             else
             {
-                alert("Email is not correct");
+                document.getElementById("EmailErr").innerHTML="Email is not correct";
+                return false;
+            }
+        }
+
+        function validatePass()
+        {
+            var hpass = document.f1.hpass;
+            var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+            if(hpass.value.match(pattern))
+                return true;
+            else
+            {
+                alert("Password must contain one lowercase,one uppercase, one digit and more than 7 character")
+                document.getElementById("hpassErr").innerHTML="Please Enter Strong Password";
+                return false;
+            }
+        }
+
+        function validateCPass()
+        {
+            var hpass = document.f1.hpass;
+            var Cpass = document.f1.Cpass;
+            if(hpass.value.match(Cpass.value))
+                return true;
+            else
+            {
+                document.getElementById("CpassErr").innerHTML="Password must match";
                 return false;
             }
         }
@@ -56,6 +81,7 @@
         function validate()
         {
             var EName = document.f1.EName;
+            var Poster = document.f1.Poster;
             var Desc = document.f1.Desc;
             var Location = document.f1.Location;
             var From = document.f1.From;
@@ -63,6 +89,7 @@
             var Deadline = document.f1.Deadline;
             var Email = document.f1.Email;
             var hpass = document.f1.hpass;
+            var Cpass = document.f1.Cpass;
 
             if(EName.value == "")
             {
@@ -76,6 +103,12 @@
                     EName.focus();
                     return false;
                 }
+            }
+
+            if(Poster.value == "")
+            {
+                Poster.focus();
+                return false;
             }
 
             if(Desc.value == "")
@@ -133,6 +166,28 @@
                 hpass.focus();
                 return false;
             }
+            else
+            {
+                if(!validatePass())
+                {
+                    hpass.focus();
+                    return false;
+                }
+            }
+
+            if(Cpass.value == "")
+            {
+                Cpass.focus();
+                return false;
+            }
+            else
+            {
+                if(!validateCPass())
+                {
+                    Cpass.focus();
+                    return false;
+                }
+            }
             alert("Event Registration Successful");
             return true;
         }
@@ -150,72 +205,105 @@
     <div class="Form">
     <h1>Event Registration</h1>
     <hr/><br/>
-    <form method="post" name="f1" onsubmit="return(validate());" action="/Home/" enctype="multipart/form-data">{%csrf_token %}
+    <form method="post" name="f1" onsubmit="return(validate());" action="/Events/EventReg/" enctype="multipart/form-data">{% csrf_token %}
         <table cellpadding="5" cellspacing="5">
             <tr>
-                <td>Event Name:</td>
+                <td>
+                    <label>Event Name:</label>
+                </td>
                 <td></td>
                 <td>
-                    <input type="text" name="EName" placeholder="like Event01">
+                    <input type="text" name="EName" placeholder="Event">
+                    <p id="ENameErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
-                <td>Description:</td>
+                <td>
+                    <label>Event Poster:</label>
+                </td>
                 <td></td>
                 <td>
-                    <textarea placeholder="Some Text" name="Desc" rows="4"></textarea>
+                    <input type="file" name="Poster">
                 </td>
             </tr>
             <tr>
-                <td>Location:</td>
+                <td>
+                    <label>Description:</label>
+                </td>
+                <td></td>
+                <td>
+                    <textarea placeholder="Event Desc." name="Desc" rows="4"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Location:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="text" name="Location" placeholder="Location">
+                    <p id="LocationErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
-                <td>From:</td>
+                <td>
+                    <label>From:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="datetime-local" name="From">
                 </td>
             </tr>
             <tr>
-                <td>To:</td>
+                <td>
+                    <label>To:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="datetime-local" name="To">
                 </td>
             </tr>
             <tr>
-                <td>Registration Deadline:</td>
+                <td>
+                    <label>Registration Deadline:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="datetime-local" name="Deadline">
                 </td>
             </tr>
             <tr>
-                <td>Host E-mail:</td>
+                <td>
+                    <label>E-mail:</label>
+                </td>
                 <td></td>
                 <td>
-                    <input type="text" placeholder="xyz@gmail.com" name="Email">
+                    <input type="text" placeholder="abc@gmail.com" name="Email">
+                    <p id="EmailErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
-                <td>Host-Password:</td>
+                <td>
+                    <label>Password:</label>
+                </td>
                 <td></td>
                 <td>
                     <input type="password" placeholder="password" name="hpass">
+                    <p id="hpassErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
-                <td></td>
                 <td>
-                    <input type="submit" name="Submit" value="submit">
+                    <label>Confirm Password:</label>
                 </td>
                 <td></td>
+                <td>
+                    <input type="password" placeholder="password" name="Cpass">
+                    <p id="CpassErr" style="color: red; font-size: small;"></p>
+                </td>
             </tr>
         </table>
+        <input type="submit" name="Submit" value="submit">
     </form>
     </div>
 </div>
