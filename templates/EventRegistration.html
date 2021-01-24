@@ -38,6 +38,53 @@
             }
         }
 
+        function validateDates()
+        {
+            var From = document.f1.From;
+            var To = document.f1.To;
+            var Deadline = document.f1.Deadline;
+            var current  = new Date();
+            var selectedDeadline = new Date(Deadline.value);
+
+            if(current < selectedDeadline)
+            {
+                if(Deadline.value < From.value)
+                {
+                    if(From.value < To.value)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        alert("To Date should be not less than To Date");
+                        document.getElementById("DeadlineErr").innerHTML="";
+                        document.getElementById("FromErr").innerHTML="";
+                        document.getElementById("ToErr").innerHTML="Please enter correct To Date";
+                        To.focus();
+                        return false;
+                    }
+                }
+                else
+                {
+                    alert("From Date should be not less than Registration Date");
+                    document.getElementById("ToErr").innerHTML="";
+                    document.getElementById("DeadlineErr").innerHTML="";
+                    document.getElementById("FromErr").innerHTML="Please enter correct From Date";
+                    From.focus();
+                    return false;
+                }
+            }
+            else
+            {
+                alert("Deadline Date should be not less than today");
+                document.getElementById("FromErr").innerHTML="";
+                document.getElementById("ToErr").innerHTML="";
+                document.getElementById("DeadlineErr").innerHTML="Please enter correct Deadline Date";
+                Deadline.focus();
+                return false;
+            }
+        }
+
         function validateEmail()
         {
             var Email = document.f1.Email;
@@ -146,6 +193,13 @@
                 Deadline.focus();
                 return false;
             }
+            else
+            {
+                if(!validateDates())
+                {
+                    return false;
+                }
+            }
 
             if(Email.value == "")
             {
@@ -197,7 +251,7 @@
     <div class="header-right">
         <a href="/Home">Home</a>
         <a class="active" href="/Events/EventReg">Event Registration</a>
-        <a href="/ParticipantReg">Participant Registration</a>
+        <a href="/Events/ParticipantReg">Participant Registration</a>
         <a href="/Events/EventDashboard">EventDashBoard</a>
     </div>
 </div>
@@ -252,6 +306,7 @@
                 <td></td>
                 <td>
                     <input type="datetime-local" name="From">
+                    <p id="FromErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
@@ -261,6 +316,7 @@
                 <td></td>
                 <td>
                     <input type="datetime-local" name="To">
+                    <p id="ToErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>
@@ -270,6 +326,7 @@
                 <td></td>
                 <td>
                     <input type="datetime-local" name="Deadline">
+                    <p id="DeadlineErr" style="color: red; font-size: small;"></p>
                 </td>
             </tr>
             <tr>

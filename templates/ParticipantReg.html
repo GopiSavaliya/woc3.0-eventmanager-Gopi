@@ -4,11 +4,21 @@
 
 <style>
     {% load static %}
+    #c1{
+        background-image: url("{% static 'images/SLIDER_gallery-2-1366x420.png' %}");
+    }
+    #c2{
+        background-image: url("{% static 'images/PaticipantRegistration.jpeg' %}");
+    }
     .content{
-            background-image: url("{% static 'images/PaticipantRegistration.jpeg' %}");
+
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -59,13 +69,13 @@
             {
                 People.min=1;
                 People.value=1;
-                People.disabled=true;
+                People.readOnly=true;
             }
             else
             {
                 People.min=2;
                 People.value=2;
-                People.disabled=false;
+                People.readOnly=false;
             }
         }
 
@@ -118,7 +128,10 @@
                     return false;
                 }
             }
-            alert("Participant Registration Successful");
+            if(!exist)
+            {
+                alert("Participant Registration Successful");
+            }
             return true;
         }
 
@@ -129,76 +142,102 @@
     <div class="header-right">
         <a href="/Home">Home</a>
         <a href="/Events/EventReg">Event Registration</a>
-        <a class="active" href="/ParticipantReg">Participant Registration</a>
+        <a class="active" href="/Events/ParticipantReg">Participant Registration</a>
         <a href="/Events/EventDashboard">EventDashBoard</a>
     </div>
 </div>
 
-<div class="content">
+
+<div class="content" id="c1">
+    <h1>Registration Open For..</h1>
+    <div class="row">
+        {% for event in event_data %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ event.EventPoster.url }}" height="250px" width="250px" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.EventName }}</h5>
+                <p class="card-text">{{ event.Description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">From: {{ event.From }}</li>
+                <li class="list-group-item">To: {{ event.To }}</li>
+                <li class="list-group-item">Registration Deadline: {{ event.RegDeadline }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="content" id="c2">
+    {% if exist %}
+         <p style="color: red; background-color:black;">{{exist}}</p>
+    {% endif %}
     <div class="Form">
-    <h1>Participant Registration</h1>
-    <hr/><br/>
-    <form method="post" name="f1" action="/ParticipantReg/" enctype="multipart/form-data">{% csrf_token %}
-        <table cellpadding="5" cellspacing="5">
-            <tr>
-                <td>
-                    <label>Name:</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="text" name="Name" placeholder="Name">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Contact No.</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="text" name="ContactNo" placeholder="Contact No.">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>E-mail:</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="text" name="Email" placeholder="E-mail ID">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Event:</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="radio" name="Event" value="Event1" checked> Event1
-                    <input type="radio" name="Event" value="Event2"> Event2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Registration-Type:</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="radio" name="Type" value="individual" onclick="radiocheck(this)" checked> Individual
-                    <input type="radio" name="Type" value="group" onclick="radiocheck(this)"> Group
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>No. of People:</label>
-                </td>
-                <td></td>
-                <td>
-                    <input type="number" name="People" min="1" value="1" disabled>
-                </td>
-            </tr>
-        </table>
-        <button type="submit" name="Submit" value="Submit" onclick="return validate();">Submit</button>
-    </form>
+        <h1>Participant Registration</h1>
+        <hr/>
+        <br/>
+        <form method="post" name="f1" action="/Events/ParticipantReg/" enctype="multipart/form-data">{% csrf_token %}
+            <table cellpadding="5" cellspacing="5">
+                <tr>
+                    <td>
+                        <label>Name:</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="text" name="Name" placeholder="Name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Contact No.</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="text" name="ContactNo" placeholder="Contact No.">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>E-mail:</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="text" name="Email" placeholder="E-mail ID">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Event:</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        {% for event in event_data %}
+                        <input type="radio" name="Event" value="{{ event.id }}" checked> {{ event.EventName }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Registration-Type:</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="radio" name="Type" value="individual" onclick="radiocheck(this)" checked>
+                        Individual
+                        <input type="radio" name="Type" value="group" onclick="radiocheck(this)"> Group
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>No. of People:</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="number" name="People" min="1" value="1" readonly>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" name="Submit" value="Submit" onclick="return validate();">Submit</button>
+        </form>
     </div>
 </div>
 {% endblock %}
