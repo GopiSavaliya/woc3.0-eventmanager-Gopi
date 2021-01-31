@@ -26,7 +26,6 @@
             pass.focus();
             return false;
         }
-        alert("Logged in");
         return true;
     }
 </script>
@@ -63,5 +62,55 @@
         <input type="submit" name="Submit" value="Submit">
     </form>
     </div>
+    {% if Error %}
+    <div>
+        {{ Error }}
+    </div>
+    {% endif %}
+    {% if participant %}
+    <br/>
+    <div class="Form">
+        <h4>EventName: {{ EventName }}</h4>
+        <hr/>
+        <table cellpadding="5" cellspacing="5">
+            <tr>
+                <th>
+                    <label>Name</label>
+                </th>
+                <th>
+                    <label>ContactNo</label>
+                </th>
+                <th>
+                    <label>Email</label>
+                </th>
+                <th>
+                    <label>Registration Type</label>
+                </th>
+                <th>
+                    <label>No Of People</label>
+                </th>
+            </tr>
+            {% for p in participant %}
+            <tr>
+                <td>
+                    {{ p.Name }}
+                </td>
+                <td>
+                    {{ p.ContactNo }}
+                </td>
+                <td>
+                    {{ p.Email }}
+                </td>
+                <td>
+                    {{ p.RegType }}
+                </td>
+                <td>
+                    {{ p.NoOfPeople }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

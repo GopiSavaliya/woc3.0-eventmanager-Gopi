@@ -1,12 +1,34 @@
+from argon2 import PasswordHasher
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Event
 from .models import Participant
-from twilio.rest import Client
 import datetime
+#import smtplib
+#from twilio.rest import Client
+
 
 def eventdashboard(request):
-    return render(request, 'EventDashBoard.html')
+    if request.method == 'POST':
+        try:
+            events = Event.objects.get(id=request.POST['EventID'])
+        except:
+            messages.warning(request, 'Please Enter Correct EventID')
+            return render(request, 'EventDashBoard.html')
+
+        if events.loginchk(request.POST['pass']):
+            participants = Participant.objects.filter(EventName=events.EventName)
+            data = {
+                "participant": participants,
+                "EventName": events.EventName
+            }
+            return render(request, 'EventDashBoard.html', data)
+        else:
+            messages.warning(request, 'Please Enter Correct Password')
+            return render(request, 'EventDashBoard.html')
+    else:
+        return render(request, 'EventDashBoard.html')
 
 
 def eventreg(request):
@@ -20,9 +42,12 @@ def eventreg(request):
         event.To = request.POST['To']
         event.RegDeadline = request.POST['Deadline']
         event.Email = request.POST['Email']
-        event.password = request.POST['hpass']
+        encpass = PasswordHasher().hash(request.POST['hpass'].encode('utf-8'))
+        event.password = encpass
         event.save()
-        return render(request, 'EventRegistration.html')
+        #Email sending code
+        messages.success(request, 'Event Registration Successful. Kindly Check Email!')
+        return render(request, 'Home.html')
     else:
         return render(request, 'EventRegistration.html')
 
@@ -49,26 +74,11 @@ def participantreg(request):
             participant.RegType = request.POST['Type']
             participant.NoOfPeople = request.POST['People']
             participant.save()
-            account_sid = "AC1e260bb10ea3e3e096e9d346097c8005"
-            auth_token = "527a9f5e5ae52b550144000ca09edd50"
-            client = Client(account_sid, auth_token)
-            message = client.messages \
-                .create(
-                body="""\nThank you """ + participant.Name + """ for registering your participation with us.
-    
-    Participation ID:""" + str(participant.id) + """
-    Event Name : """ + events.EventName + """
-    Location : """ + events.Location + """
-    Time : """ + str(events.From) + """-""" + str(events.To) + """"
-    No. of people : """ + str(participant.NoOfPeople) + """
-    
-    -EventManager""",
-                from_='+12139082091',
-                to='+91' + participant.ContactNo
-            )
-
+            #SMS Sending Code
+            messages.success(request, 'Participant Registration Successful. Kindly Check SMS!')
+            return render(request, 'Home.html')
         else:
-            event['exist'] = "Participant already registered for the Event"
+            messages.warning(request, "Participant already registered for the Event")
+            return render(request, 'ParticipantReg.html', event)
 
     return render(request, 'ParticipantReg.html', event)
-

@@ -1,4 +1,5 @@
 from django.db import models
+from argon2 import PasswordHasher
 
 
 class Event(models.Model):
@@ -10,9 +11,17 @@ class Event(models.Model):
     To = models.DateTimeField()
     RegDeadline = models.DateTimeField()
     Email = models.CharField(max_length=255)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=100)
+
     def __str__(self):
         return self.EventName
+
+
+    def loginchk(self, pas):
+        try:
+            return PasswordHasher().verify(self.password.encode('utf-8'), pas)
+        except:
+            return False
 
 
 class Participant(models.Model):
